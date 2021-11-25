@@ -58,7 +58,10 @@ public class App {
         boolean test = javaClasses.stream().anyMatch(oc -> oc.getTitle().contains("test"));
         System.out.println("test = " + test);
 
-        System.out.println("스프링 수업중에 제목에 spring");
+        System.out.println("스프링 수업중에 제목에 spring 이 들어간 제목만 모아서 List로 만들기");
+        List<String> titleInSpringList = springClasses.stream().filter(oc -> oc.getTitle().contains("spring"))
+                .map(OnlineClass::getTitle)
+                .collect(Collectors.toList());
     }
 
     private static void streamTest1() {
