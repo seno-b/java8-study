@@ -2,10 +2,7 @@ package me.senob.java8study.optional;
 
 import me.senob.java8study.stream.OnlineClass;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,9 +17,39 @@ public class App {
         springClasses.add(new OnlineClass(4, "spring core", false));
         springClasses.add(new OnlineClass(5, "rest api development", false));
 
-        OnlineClass onlineClass = new OnlineClass(1, "spring mvc", true);
-//        System.out.println(onlineClass.getProgress().getStudyDuration());
+        Optional<OnlineClass> optionalOnlineClass = springClasses.stream()
+                .filter(oc -> oc.getTitle().startsWith("jpa"))
+                .findFirst();
 
-        System.out.println(onlineClass.getProgress());
+        boolean present = optionalOnlineClass.isPresent(); // present 로 검사 반대는 isEmpty()
+        System.out.println("present = " + present);
+
+        if (optionalOnlineClass.isPresent()) {
+            OnlineClass onlineClass = optionalOnlineClass.get();
+            String title = onlineClass.getTitle();
+            System.out.println("title = " + title);
+        }
+        
+        optionalOnlineClass.ifPresent(oc -> System.out.println("oc.getTitle() = " + oc.getTitle()));
+
+        OnlineClass onlineClass = optionalOnlineClass.orElse(createNewClass());
+        System.out.println("onlineClass = " + onlineClass.getTitle());
+
+        OnlineClass orGetClass = optionalOnlineClass.orElseGet(App::createNewClass);
+        System.out.println("orGetClass = " + orGetClass.getTitle());
+
+        /*OnlineClass orElseThrow = optionalOnlineClass.orElseThrow();
+        System.out.println("orElseThrow = " + orElseThrow.getTitle());
+
+        OnlineClass orElseCreateThrow = optionalOnlineClass.orElseThrow(IllegalArgumentException::new);
+        System.out.println("orElseThrow = " + orElseThrow.getTitle());*/
+
+        Optional<OnlineClass> optionalOnlineClass1 = optionalOnlineClass.filter(OnlineClass::isClosed);
+        System.out.println("optionalOnlineClass1 = " + optionalOnlineClass1.isPresent());
+    }
+
+    private static OnlineClass createNewClass() {
+        System.out.println("create things");
+        return new OnlineClass(10, "new Class", false);
     }
 }
