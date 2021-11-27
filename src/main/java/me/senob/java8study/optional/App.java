@@ -46,6 +46,14 @@ public class App {
 
         Optional<OnlineClass> optionalOnlineClass1 = optionalOnlineClass.filter(OnlineClass::isClosed);
         System.out.println("optionalOnlineClass1 = " + optionalOnlineClass1.isPresent());
+
+        Optional<Integer> optionalInteger = optionalOnlineClass.map(oc -> oc.getId());
+        System.out.println("optionalInteger.isPresent() = " + optionalInteger.isPresent());
+
+        Optional<Optional<Progress>> progress = optionalOnlineClass.map(oc -> oc.getProgress());
+
+        Optional<Progress> progress1 = optionalOnlineClass.flatMap(oc -> oc.getProgress());
+        Progress progress2 = progress1.orElseThrow();
     }
 
     private static OnlineClass createNewClass() {
