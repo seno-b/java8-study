@@ -3,12 +3,7 @@ package me.senob.java8study.concurrent;
 public class App {
     public static void main(String[] args) {
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("hello runnable : " + Thread.currentThread().getName());
-            }
-        });
+        Thread thread = new Thread(() -> System.out.println("thread run : " + Thread.currentThread().getName()));
 
         MyThread myThread = new MyThread();
         myThread.start();
