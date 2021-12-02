@@ -1,15 +1,28 @@
 package me.senob.java8study.concurrent;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Thread thread = new Thread(() -> System.out.println("thread run : " + Thread.currentThread().getName()));
+        Thread thread = new Thread(() -> {
+            int a = 0;
+            while(true){
+                a++;
+                System.out.println(Thread.currentThread().getName() + "thread count : " + a);
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                    return ;
+                }
+            }
 
-        MyThread myThread = new MyThread();
-        myThread.start();
-
-        System.out.println("Hello " + Thread.currentThread().getName());
+        });
 
         thread.start();
+
+        System.out.println("dlkdkdkdkd");
+        Thread.sleep(3000L);
+        thread.interrupt();
+
     }
 }
