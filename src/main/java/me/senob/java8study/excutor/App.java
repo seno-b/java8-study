@@ -9,11 +9,12 @@ public class App {
         executorService.submit(() -> new Runnable() {
             @Override
             public void run() {
-
+                System.out.println("executorService = " + executorService);
             }
         });
 
         executorService.shutdown();
+
 
     }
 }
