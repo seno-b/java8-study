@@ -19,6 +19,5 @@ public class App {
         }, executorService
         ).thenRunAsync(() -> System.out.println("그냥 뭔가 실행 ... " + Thread.currentThread().getName()), executorService);
 
-        stringCompletableFuture.get();
     }
 }
